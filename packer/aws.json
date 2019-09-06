@@ -1,0 +1,4 @@
+{
+  "AwsProfile": "{{env `AWS_PROFILE`}}",
+  "AwsRegion": "{{env `AWS_REGION`}}"
+}
