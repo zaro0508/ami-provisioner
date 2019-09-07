@@ -24,4 +24,4 @@ jobs:
         - pre-commit run --all-files
     - stage: deploy
       script:
-        - ./build.sh
+        - travis_wait 30 ./build.sh || travis_terminate 1

@@ -18,12 +18,9 @@ do
   status=$?
   echo "${log}"
   # special case skip build if AWS contains an AMI with the same name
-  echo "test1"
   if [[ ${log} =~ "name conflicts with an existing AMI" && ${status} -ne 0 ]]; then
-    echo "test2"
     printf "\n\e[1;33m==> WARN: Skipped build, AMI already exists.\n\n"
   elif [[ ${status} -ne 0 ]]; then   # catch any other failure
-    echo "test3"
     popd
     exit 1
   fi
