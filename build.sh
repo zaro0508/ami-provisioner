@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -e
+set +e
 
 # Deploy images to AWS account to share with other projects.
 
