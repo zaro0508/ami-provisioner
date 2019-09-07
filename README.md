@@ -24,16 +24,15 @@ Requirements:
 * Run `pre-commit install` to install the git hook.
 
 ## Testing
-As a pre-deployment step we syntatically validate our sceptre and
-cloudformation yaml files with [pre-commit](https://pre-commit.com).
+As a pre-deployment step we syntatically validate our packer json
+files with [pre-commit](https://pre-commit.com).
 
 Please install pre-commit, once installed the file validations will
 automatically run on every commit.  Alternatively you can manually
 execute the validations by running `pre-commit run --all-files`.
 
 ## Deployments
-We use [sceptre](https://sceptre.github.io/) and [cloudformation](https://aws.amazon.com/cloudformation/)
-to deploy resources onto an AWS account.
+Travis runs packer which temporarily deploys an EC2 to create an AMI.
 
 ## Continuous Integration
 We have configured Travis to deploy cloudformation template updates.
