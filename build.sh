@@ -14,7 +14,7 @@ do
   # provisioners reference files relative to current dir therefore need to run
   # build in each directory
   pushd "${dir}"
-  log="$(packer build -var-file=../../aws.json ${file} 2>&1)"
+  log="$(packer build -var AwsProfile=default -var AwsRegion=us-east-1 ${file} 2>&1)"
   status=$?
   echo "${log}"
   # special case skip build if AWS contains an AMI with the same name
