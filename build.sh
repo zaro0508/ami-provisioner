@@ -21,7 +21,7 @@ do
   file="${template##*/}"  # filename with extension
   extension="${file##*.}"
   filename="${file%.*}"
-  echo "Packer building template: ${template}"
+  printf "\n\e[1;33m==> Packer building template: ${template}\n\n"
   # provisioners reference files relative to current dir therefore need to run
   # build in each directory
   pushd "${dir}"
@@ -30,8 +30,8 @@ do
   else
     log="$(packer build -var AwsProfile=${AwsProfile} -var AwsRegion=${AwsRegion} ${file} 2>&1)"
   fi
-  echo "${log}"
   status=$?
+  echo "${log}"
   # special case skip build if AWS contains an AMI with the same name
   if [[ ${log} =~ "name conflicts with an existing AMI" && ${status} -ne 0 ]]; then
     printf "\n\e[1;33m==> WARN: Skipped build, AMI already exists.\n\n"
