@@ -1,0 +1,50 @@
+{
+  "builders": [
+    {
+      "ami_groups": "{{user `AmiGroups`}}",
+      "ami_name": "{{user `ImageName`}}",
+      "force_delete_snapshot": "true",
+      "instance_type": "{{user `InstanceType`}}",
+      "launch_block_device_mappings": [
+        {
+          "delete_on_termination": true,
+          "device_name": "/dev/xvda",
+          "volume_size": "{{user `VolumeSize`}}",
+          "volume_type": "gp2"
+        }
+      ],
+      "profile": "{{user `AwsProfile`}}",
+      "region": "{{user `AwsRegion`}}",
+      "source_ami": "{{user `SourceImage`}}",
+      "ssh_username": "{{user `SshUsername`}}",
+      "tags": {
+        "BuiltBy": "Packer",
+        "Department": "{{user `Department`}}",
+        "Name": "{{user `ImageName`}}",
+        "OwnerEmail": "{{user `OwnerEmail`}}",
+        "Project": "{{user `Project`}}",
+        "SourceAmiId": "{{ .SourceAMI }}",
+        "SourceAmiName": "{{ .SourceAMIName }}"
+      },
+      "type": "amazon-ebs"
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "manifest.json",
+      "strip_path": true,
+      "type": "manifest"
+    }
+  ],
+  "variables": {
+    "AmiGroups": "all",
+    "Department": "Platform",
+    "ImageName": "weechat-v1.0.0",
+    "InstanceType": "t2.nano",
+    "OwnerEmail": "khai.do@sagebase.org",
+    "Project": "Infrastructure",
+    "SourceImage": "ami-0a313d6098716f372",
+    "SshUsername": "ubuntu",
+    "VolumeSize": "8"
+  }
+}
