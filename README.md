@@ -7,13 +7,34 @@ The workflow to provision AWS AMI is done using pull requests.
 ### Requirements
 * Install [packer](https://www.packer.io/intro/getting-started/install.html)
 
-### Creating a AMI
-1. Create a new folder with version (i.e. mkdir -p packer/MyAmi/MyAmi-v1.0.0)
-2. Create a packer configuration file (must be `template.json`)
-3. run packer `cd packer/MyAmi/MyAmi-v1.0.0 && packer build -var AwsProfile=my-aws-account -var AwsRegion=us-east-1 template.json`
+### Create snapshot AMI
+1. Create new folder (i.e. mkdir -p packer/MyAmi-LATEST)
+2. Create a packer configuration file (must be `packer/MyAmi/template.json`).  Set `ami_name` to `MyAmi-LATEST`
+3. Validate packer file (i.e. packer validate packer/MyAmi/template.json)
+4. Create a PR with new files.
 
-__Note__: the packer build will deploy a new AWI to the AWS specified by the aws profile
+__Note__: a snapshot AMI is re-built on every travis build however the AMI ID will change on every build
 
+### Version a snapshot AMI
+1. Copy the snapshot AMI folder and give it a version (i.e. cp packer/MyAmi-LATEST packer/MyAmi-v1.0.0)
+2. Change the `ami_name` in template.json to `MyAmi-v1.0.0`
+3. Validate packer file (i.e. packer validate packer/MyAmi/template.json)
+4. Create a PR with new files.
+
+__Note__: once an AMI has been versioned it will never be rebuilt to preserve dependencies to it by other resources
+
+### Manual AMI Build
+If you would like to test building an AMI run:
+```
+Build AMI (i.e. packer build -var AwsProfile=my-aws-account -var AwsRegion=us-east-1 packer/MyAmi/template.json)
+```
+
+Packer will do the following:
+* Create a temporary EC2 instance, configure it with shell/ansible/puppet/etc. scripts.
+* Create an AMI from the EC2
+* Delete the EC2
+
+__Note__: packer deploys a new AWI to the AWS account specified by the AwsProfile
 
 ## Contributions
 Contributions are welcome.
