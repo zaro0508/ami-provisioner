@@ -105,3 +105,6 @@ venv.bak/
 
 # packer
 manifest.json
+
+# jetbrains
+.idea/
