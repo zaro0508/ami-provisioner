@@ -8,25 +8,19 @@ The workflow to provision AWS AMI is done using pull requests.
 * Install [packer](https://www.packer.io/intro/getting-started/install.html)
 
 ### Create snapshot AMI
-1. Create new folder (i.e. mkdir -p packer/MyAmi-LATEST)
-2. Create a packer configuration file (must be `packer/MyAmi/template.json`).  Set `ami_name` to `MyAmi-LATEST`
-3. Validate packer file (i.e. packer validate packer/MyAmi/template.json)
-4. Create a PR with new files.
+1. Create new folder (i.e. mkdir -p packer/MyAmi/MyAmi-LATEST)
+2. Go into MyAmi-LATEST directory (i.e. cd packer/MyAmi/MyAmi-LATEST)
+3. Create a packer configuration file (must be `template.json`).  Set `ami_name` in parameter to `MyAmi-LATEST`
+4. Validate packer file (i.e. packer validate template.json)
+5. Create a PR with new files.
 
-__Note__: a snapshot AMI is re-built on every travis build however the AMI ID will change on every build
-
-### Version a snapshot AMI
-1. Copy the snapshot AMI folder and give it a version (i.e. cp packer/MyAmi-LATEST packer/MyAmi-v1.0.0)
-2. Change the `ami_name` in template.json to `MyAmi-v1.0.0`
-3. Validate packer file (i.e. packer validate packer/MyAmi/template.json)
-4. Create a PR with new files.
-
-__Note__: once an AMI has been versioned it will never be rebuilt to preserve dependencies to it by other resources
+__Note__: A snapshot AMI is re-deployed (with a new AMI ID) on every PR merge
 
 ### Manual AMI Build
 If you would like to test building an AMI run:
 ```
-Build AMI (i.e. packer build -var AwsProfile=my-aws-account -var AwsRegion=us-east-1 packer/MyAmi/template.json)
+cd packer/MyAmi/MyAmi-LATEST
+packer build -var AwsProfile=my-aws-account -var AwsRegion=us-east-1 template.json)
 ```
 
 Packer will do the following:
@@ -34,7 +28,17 @@ Packer will do the following:
 * Create an AMI from the EC2
 * Delete the EC2
 
-__Note__: packer deploys a new AWI to the AWS account specified by the AwsProfile
+__Note__: Packer deploys a new AMI to the AWS account specified by the AwsProfile
+
+### Version a snapshot AMI
+1. Copy the snapshot AMI folder and give it a version (i.e. cp packer/MyAmi/MyAmi-LATEST packer/MyAmi/MyAmi-v1.0.0)
+2. Go into MyAmi-LATEST directory (i.e. cd packer/MyAmi/MyAmi-v1.0.0)
+2. Change the `ami_name` in template.json to `MyAmi-v1.0.0`
+3. Validate packer file (i.e. packer validate template.json)
+4. Create a PR with new files.
+
+__Note__: Once an AMI has been versioned it will never be re-built.  The purpose is to preserve
+dependencies to it by other resources
 
 ## Contributions
 Contributions are welcome.
