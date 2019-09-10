@@ -31,7 +31,7 @@ Packer will do the following:
 __Note__: Packer deploys a new AMI to the AWS account specified by the AwsProfile
 
 ### Version a snapshot AMI
-1. Copy the snapshot AMI folder and give it a version (i.e. cp packer/MyAmi/MyAmi-LATEST packer/MyAmi/MyAmi-v1.0.0)
+1. Copy the snapshot AMI folder and give it a version (i.e. cp -r packer/MyAmi/MyAmi-LATEST packer/MyAmi/MyAmi-v1.0.0)
 2. Go into MyAmi-LATEST directory (i.e. cd packer/MyAmi/MyAmi-v1.0.0)
 2. Change the `ami_name` in template.json to `MyAmi-v1.0.0`
 3. Validate packer file (i.e. packer validate template.json)
