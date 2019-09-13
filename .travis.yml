@@ -25,4 +25,4 @@ jobs:
         - ./validate_templates.sh || travis_terminate 1
     - stage: deploy
       script:
-        - travis-wait-improved 30 ./build.sh || travis_terminate 1
+        - travis-wait-improved --timeout 30m ./build.sh || travis_terminate 1
