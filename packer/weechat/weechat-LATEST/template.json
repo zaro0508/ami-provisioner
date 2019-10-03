@@ -49,7 +49,7 @@
     "InstanceType": "t2.nano",
     "OwnerEmail": "khai.do@sagebase.org",
     "Project": "Infrastructure",
-    "SourceImage": "ami-0a313d6098716f372",
+    "SourceImage": "ami-0cfee17793b08a293",
     "SshUsername": "ubuntu",
     "VolumeSize": "8"
   }
