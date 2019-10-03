@@ -51,7 +51,6 @@
     "Department": "Platform",
     "ImageName": "sagebio-base-linux-LATEST",
     "InstanceType": "t2.micro",
-    "JcConnectKey": null,
     "OwnerEmail": "khai.do@sagebase.org",
     "Project": "Infrastructure",
     "SourceImage": "ami-0a313d6098716f372",
