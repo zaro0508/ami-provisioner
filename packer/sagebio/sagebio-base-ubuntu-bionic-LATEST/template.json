@@ -49,7 +49,7 @@
   "variables": {
     "AmiGroups": "all",
     "Department": "Platform",
-    "ImageName": "sagebio-base-linux-LATEST",
+    "ImageName": "sagebio-base-ubuntu-bionic-LATEST",
     "InstanceType": "t2.micro",
     "OwnerEmail": "khai.do@sagebase.org",
     "Project": "Infrastructure",
