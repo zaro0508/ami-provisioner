@@ -26,9 +26,9 @@ do
   # build in each directory
   pushd "${dir}"
   if [[ ${dir} =~ "LATEST" ]]; then
-    log="$(packer build -force -var AwsProfile=${AwsProfile} -var AwsRegion=${AwsRegion} ${file} 2>&1)"
+    log="$(packer build -force -var AwsProfile=${AwsProfile} -var AwsRegion=${AwsRegion} -var JcConnectKey=${JcConnectKey} ${file} 2>&1)"
   else
-    log="$(packer build -var AwsProfile=${AwsProfile} -var AwsRegion=${AwsRegion} ${file} 2>&1)"
+    log="$(packer build -var AwsProfile=${AwsProfile} -var AwsRegion=${AwsRegion} -var JcConnectKey=${JcConnectKey} ${file} 2>&1)"
   fi
   status=$?
   echo "${log}"

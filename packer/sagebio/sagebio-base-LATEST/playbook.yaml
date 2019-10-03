@@ -1,0 +1,29 @@
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Install curl package (Debian based)
+      action: apt pkg='curl' state=installed
+      when: "'$ansible_pkg_mgr' == 'apt'"
+
+    - name: Install ntp package (Debian based)
+      action: apt pkg='ntp' state=installed
+      when: "'$ansible_pkg_mgr' == 'apt'"
+
+    - name: Install curl package (RedHat based)
+      action: yum name='curl' state=installed
+      when: "'$ansible_pkg_mgr' == 'yum'"
+
+    - name: Check if JumpCloud is already installed
+      shell: "[ -d /opt/jc ] && echo 'Found' || echo ''"
+      register: jc_installed
+
+    - name: Update time
+      shell: "ntpdate -u pool.ntp.org"
+      when: "not jc_installed.stdout"
+
+    - name: Install JumpCloud
+      shell: "curl --header 'x-connect-key: {{ lookup('env','JcConnectKey') }}' https://kickstart.jumpcloud.com/Kickstart | sudo bash"
+      args:
+        warn: False
+      when: "not jc_installed.stdout"
