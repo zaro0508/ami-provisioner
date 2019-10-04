@@ -2,17 +2,21 @@
   become: yes
 
   tasks:
-    - name: Install curl package (Debian based)
-      action: apt pkg='curl' state=installed
-      when: "'$ansible_pkg_mgr' == 'apt'"
+    - name: install system updates for centos systems
+      yum: name=* state=latest update_cache=yes
+      when: ansible_distribution == "CentOS"
 
-    - name: Install ntp package (Debian based)
-      action: apt pkg='ntp' state=installed
-      when: "'$ansible_pkg_mgr' == 'apt'"
+    - name: install system updates for ubuntu systems
+      apt: upgrade=dist update_cache=yes
+      when: ansible_distribution == "Ubuntu"
 
-    - name: Install curl package (RedHat based)
-      action: yum name='curl' state=installed
-      when: "'$ansible_pkg_mgr' == 'yum'"
+    - name: install packages
+      package:
+        name:
+          - "ntpdate"
+          - "ntp"
+          - "curl"
+        state: present
 
     - name: Check if JumpCloud is already installed
       shell: "[ -d /opt/jc ] && echo 'Found' || echo ''"
