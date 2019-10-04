@@ -17,6 +17,14 @@
           - "curl"
         state: present
 
+    # awscli is on aws linux2 distro by default
+    - name: install awscli
+      snap:
+        name:
+          - aws-cli
+        classic: yes
+      when: ansible_distribution == "Ubuntu"
+
     - name: Check if JumpCloud is already installed
       shell: "[ -d /opt/jc ] && echo 'Found' || echo ''"
       register: jc_installed
