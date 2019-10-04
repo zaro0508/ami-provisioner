@@ -14,7 +14,6 @@
       package:
         name:
           - "ntpdate"
-          - "ntp"
           - "curl"
         state: present
 
