@@ -18,6 +18,12 @@
           - "ntpdate"
         state: present
 
+    - name: install AWS SSM
+      snap:
+        name: amazon-ssm-agent
+        classic: yes
+      when: ansible_distribution == "Ubuntu"
+
     - name: Check if JumpCloud is already installed
       shell: "[ -d /opt/jc ] && echo 'Found' || echo ''"
       register: jc_installed
