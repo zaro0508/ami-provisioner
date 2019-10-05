@@ -1,0 +1,40 @@
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: install system updates for centos systems
+      yum: name=* state=latest update_cache=yes
+      when: ansible_distribution == "CentOS"
+
+    - name: install system updates for ubuntu systems
+      apt: upgrade=dist update_cache=yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: install packages
+      package:
+        name:
+          - "ntpdate"
+          - "curl"
+        state: present
+
+    # awscli is on aws linux2 distro by default
+    - name: install awscli
+      snap:
+        name:
+          - aws-cli
+        classic: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Check if JumpCloud is already installed
+      shell: "[ -d /opt/jc ] && echo 'Found' || echo ''"
+      register: jc_installed
+
+    - name: Update time
+      shell: "ntpdate -u pool.ntp.org"
+      when: "not jc_installed.stdout"
+
+    - name: Install JumpCloud
+      shell: "curl --header 'x-connect-key: {{ lookup('env','JcConnectKey') }}' https://kickstart.jumpcloud.com/Kickstart | sudo bash"
+      args:
+        warn: False
+      when: "not jc_installed.stdout"
