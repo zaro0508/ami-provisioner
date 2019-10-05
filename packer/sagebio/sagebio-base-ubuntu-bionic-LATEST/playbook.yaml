@@ -24,7 +24,6 @@
         name: amazon-ssm-agent
         classic: yes
       when: ansible_distribution == "Ubuntu"
-        state: present
 
     - name: Check if JumpCloud is already installed
       shell: "[ -d /opt/jc ] && echo 'Found' || echo ''"
