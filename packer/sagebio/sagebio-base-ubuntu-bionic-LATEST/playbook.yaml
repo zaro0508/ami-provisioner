@@ -19,12 +19,13 @@
 
     # awscli and amazon-ssm-agent are on aws linux2 by default
     - name: install snaps
+      snappable_distros: Ubuntu, Debian
       snap:
         name:
           - aws-cli
           - amazon-ssm-agent
         classic: yes
-      when: ansible_distribution == "Ubuntu"
+      when: ansible_distribution in '{{ snappable_distros }}'
 
     - name: Check if JumpCloud is already installed
       shell: "[ -d /opt/jc ] && echo 'Found' || echo ''"
