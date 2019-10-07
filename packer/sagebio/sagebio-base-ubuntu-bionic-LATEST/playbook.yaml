@@ -18,10 +18,11 @@
         state: present
 
     # awscli is on aws linux2 distro by default
-    - name: install awscli
+    - name: install awscli and SSM
       snap:
         name:
           - aws-cli
+          - amazon-ssm-agent
         classic: yes
       when: ansible_distribution == "Ubuntu"
 
