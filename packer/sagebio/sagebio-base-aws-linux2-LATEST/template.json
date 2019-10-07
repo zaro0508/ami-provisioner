@@ -1,8 +1,8 @@
 {
   "builders": [
     {
-      "ami_groups": "{{user `AmiGroups`}}",
       "ami_name": "{{user `ImageName`}}",
+      "ami_users": "{{user `AmiUsers`}}",
       "force_delete_snapshot": "true",
       "instance_type": "{{user `InstanceType`}}",
       "launch_block_device_mappings": [
@@ -15,6 +15,7 @@
       ],
       "profile": "{{user `AwsProfile`}}",
       "region": "{{user `AwsRegion`}}",
+      "snapshot_users": "{{user `SnapshotUsers`}}",
       "source_ami": "{{user `SourceImage`}}",
       "ssh_username": "{{user `SshUsername`}}",
       "tags": {
@@ -47,12 +48,13 @@
     }
   ],
   "variables": {
-    "AmiGroups": "all",
+    "AmiUsers": "563295687221,055273631518,804034162148",
     "Department": "Platform",
     "ImageName": "sagebio-base-aws-linux2-LATEST",
     "InstanceType": "t2.nano",
     "OwnerEmail": "khai.do@sagebase.org",
     "Project": "Infrastructure",
+    "SnapshotUsers": "563295687221,055273631518,804034162148",
     "SourceImage": "ami-0b69ea66ff7391e80",
     "SshUsername": "ec2-user",
     "VolumeSize": "8"
