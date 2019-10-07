@@ -17,8 +17,8 @@
           - "curl"
         state: present
 
-    # awscli is on aws linux2 distro by default
-    - name: install awscli and SSM
+    # awscli and amazon-ssm-agent are on aws linux2 by default
+    - name: install snaps
       snap:
         name:
           - aws-cli
