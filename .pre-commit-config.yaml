@@ -8,3 +8,8 @@ repos:
     -   id: check-json
     -   id: pretty-format-json
         args: [--autofix]
+-   repo: https://github.com/ansible/ansible-lint
+    rev: v4.1.0
+    hooks:
+    -   id: ansible-lint
+        files: packer/.*\.(yaml|yml)$
