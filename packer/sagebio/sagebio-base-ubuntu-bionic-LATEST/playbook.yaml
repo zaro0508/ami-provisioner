@@ -22,7 +22,7 @@
       register: snap_installed
 
     # awscli and amazon-ssm-agent are on aws linux2 by default
-    - name: Install awscli and amazon-ssm-agent if available in Snappy
+    - name: Install awscli and amazon-ssm-agent
       snap:
         name:
           - aws-cli
