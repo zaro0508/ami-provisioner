@@ -9,7 +9,7 @@ repos:
     -   id: pretty-format-json
         args: [--autofix]
 -   repo: https://github.com/ansible/ansible-lint
-    rev: v4.1.0
+    rev: v4.1.1a0
     hooks:
     -   id: ansible-lint
         files: packer/.*\.(yaml|yml)$
