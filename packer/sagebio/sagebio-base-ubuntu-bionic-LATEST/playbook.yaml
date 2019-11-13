@@ -17,13 +17,18 @@
           - "curl"
         state: present
 
-    # awscli is on aws linux2 distro by default
-    - name: install awscli
+    - name: Prep snap classic
+      shell: "[ -x /snap ] || yum install -y epel-release snapd && systemctl enable --now snapd.socket && ln -s /var/lib/snapd/snap /snap || echo ''"
+      register: snap_installed
+
+    # awscli and amazon-ssm-agent are on aws linux2 by default
+    - name: Install awscli and amazon-ssm-agent
       snap:
         name:
           - aws-cli
+          - amazon-ssm-agent
         classic: yes
-      when: ansible_distribution == "Ubuntu"
+      when: "not snap_installed.stdout"
 
     - name: Check if JumpCloud is already installed
       shell: "[ -d /opt/jc ] && echo 'Found' || echo ''"
