@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "ami_name": "sagebio-base-ubuntu-bionic-v1.0.0",
+      "ami_name": "{{user `ImageName`}}",
       "ami_users": "{{user `AmiUsers`}}",
       "force_delete_snapshot": "true",
       "instance_type": "{{user `InstanceType`}}",
@@ -50,7 +50,7 @@
   "variables": {
     "AmiUsers": "563295687221,055273631518,804034162148",
     "Department": "Platform",
-    "ImageName": "sagebio-base-ubuntu-bionic-LATEST",
+    "ImageName": "sagebio-base-ubuntu-bionic-v1.0.0",
     "InstanceType": "t2.nano",
     "OwnerEmail": "khai.do@sagebase.org",
     "Project": "Infrastructure",
