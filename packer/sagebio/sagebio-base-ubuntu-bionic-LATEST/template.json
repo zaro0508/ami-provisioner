@@ -48,14 +48,14 @@
     }
   ],
   "variables": {
-    "AmiUsers": "563295687221,055273631518,804034162148",
+    "AmiUsers": "563295687221,055273631518,804034162148,237179673806",
     "Department": "Platform",
     "ImageName": "sagebio-base-ubuntu-bionic-LATEST",
-    "InstanceType": "t2.nano",
+    "InstanceType": "t3.nano",
     "OwnerEmail": "khai.do@sagebase.org",
     "Project": "Infrastructure",
-    "SnapshotUsers": "563295687221,055273631518,804034162148",
-    "SourceImage": "ami-0a313d6098716f372",
+    "SnapshotUsers": "563295687221,055273631518,804034162148,237179673806",
+    "SourceImage": "ami-07ebfd5b3428b6f4d",
     "SshUsername": "ubuntu",
     "VolumeSize": "8"
   }
