@@ -22,7 +22,8 @@ to make updates to this `LATEST` AMI.
 If you would like to test building an AMI run:
 ```
 cd packer/sagebio/MyAmi-LATEST
-packer build -var AwsProfile=my-aws-account -var AwsRegion=us-east-1 template.json)
+export JcConnectKey=XXXXXXXXXX
+packer build -var AwsProfile=my-aws-account -var AwsRegion=us-east-1 -var JcConnectKey=${JcConnectKey} template.json
 ```
 
 Packer will do the following:
