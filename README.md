@@ -5,8 +5,7 @@ Project for automating AMI deployments to a Sage AMI repository
 The workflow to provision AWS AMI is done using pull requests.
 
 ### Requirements
-* Install [packer](https://www.packer.io/intro/getting-started/install.html)
-* pip install ansible
+* Install [packer](https://www.packer.io/intro/getting-started/install.html) (Use this [shell script](install_packer.sh))
 
 ### Create snapshot AMI
 1. Create new folder (i.e. mkdir -p packer/sagebio/MyAmi-LATEST)
