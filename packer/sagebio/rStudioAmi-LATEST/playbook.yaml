@@ -11,6 +11,8 @@
       when: ansible_distribution == "Ubuntu"
 
     - name: install packages
+      environment:
+        MY_ENV_VARIABLE: DEBIAN_FRONTEND=noninteractive
       package:
         name:
           - "ntpdate"
