@@ -34,20 +34,14 @@
           - "r-base"
         state: present
 
-    - name: Ensure ansible-cache directory exists
-      shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
-
     - name: Download rstudio-server
-      get_url: url=https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.5033-amd64.deb dest=/var/local/ansible-cache/rstudio-server-1.2.5033-amd64.deb
-      # sudo: yes
+      get_url: url=https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.5033-amd64.deb dest=/tmp/rstudio.deb
 
     - name: Install RStudio Server
-      command: gdebi /var/local/ansible-cache/rstudio-server-1.2.5033-amd64.deb
-      # sudo: yes
+      command: gdebi --non-interactive /tmp/rstudio.deb
 
     - name: "Setup username: studio, password: password"
       user: name=studio password=password update_password=always uid=1031
-      # sudo: yes
 
     - name: Install synapser
       shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
