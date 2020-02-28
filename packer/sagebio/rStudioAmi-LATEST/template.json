@@ -55,7 +55,7 @@
     "OwnerEmail": "thomas.yu@sagebase.org",
     "Project": "Infrastructure",
     "SnapshotUsers": "563295687221,055273631518,804034162148,237179673806",
-    "SourceImage": "ami-0226a8af83fcecb43",
+    "SourceImage": "ami-0944334364827dc2d",
     "SshUsername": "ubuntu",
     "VolumeSize": "16"
   }

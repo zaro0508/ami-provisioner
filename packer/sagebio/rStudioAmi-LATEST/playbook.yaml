@@ -5,9 +5,15 @@
   tasks:
     # No need to upgrade distribution, only need to install
     # causes an Could not get lock /var/lib/dpkg/lock-frontend error
-    # - name: install system updates for ubuntu systems
-    #   apt: upgrade=dist
-    #   when: ansible_distribution == "Ubuntu"
+    - name: Add APT repository
+      apt_repository: repo="deb https://cran.rstudio.com/bin/linux/ubuntu/ {{ ansible_distribution_release }}/" mode=644
+
+    - name: Add the APT key
+      apt_key: keyserver=keyserver.ubuntu.com id=E084DAB9
+
+    - name: install system updates for ubuntu systems
+      apt: upgrade=dist update_cache=yes
+      when: ansible_distribution == "Ubuntu"
 
     - name: install packages
       environment:
@@ -21,6 +27,10 @@
           - "libssl-dev"
           - "libffi-dev"
           - "libcurl4-openssl-dev"
+          - "gdebi-core"
+          - "libapparmor1"
+          - "libcurl4-gnutls-dev"
+          - "r-base"
         state: present
 
     - name: Prep snap classic
@@ -49,6 +59,23 @@
       args:
         warn: False
       when: "not jc_installed.stdout"
+
+    # http://www.rstudio.com/products/rstudio/download-server/
+    - name: Ensure ansible-cache directory exists
+      shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
+      sudo: yes
+
+    - name: Download rstudio-server
+      get_url: url=http://download2.rstudio.org/rstudio-server-0.98.1103-amd64.deb dest=/var/local/ansible-cache/rstudio-server-0.98.1103-amd64.deb
+      sudo: yes
+
+    - name: Install RStudio Server
+      command: gdebi /var/local/ansible-cache/rstudio-server-0.98.1103-amd64.deb -n
+      sudo: yes
+
+    - name: "Setup username: studio, password: password"
+      user: name=studio password=password update_password=always uid=1031
+      sudo: yes
 
     - name: Install synapser
       shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
