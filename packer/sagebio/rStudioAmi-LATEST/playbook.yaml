@@ -5,15 +5,15 @@
   tasks:
     # No need to upgrade distribution, only need to install
     # causes an Could not get lock /var/lib/dpkg/lock-frontend error
-    - name: Add APT repository
-      apt_repository: repo="deb https://cran.rstudio.com/bin/linux/ubuntu/ {{ ansible_distribution_release }}/" mode=644
+    # - name: Add APT repository
+    #   apt_repository: repo="deb https://cran.rstudio.com/bin/linux/ubuntu/ {{ ansible_distribution_release }}/" mode=644
 
-    - name: Add the APT key
-      apt_key: keyserver=keyserver.ubuntu.com id=E084DAB9
+    # - name: Add the APT key
+    #   apt_key: keyserver=keyserver.ubuntu.com id=E084DAB9
 
-    - name: install system updates for ubuntu systems
-      apt: upgrade=dist update_cache=yes
-      when: ansible_distribution == "Ubuntu"
+    # - name: install system updates for ubuntu systems
+    #   apt: upgrade=dist
+    #   when: ansible_distribution == "Ubuntu"
 
     - name: install packages
       environment:
@@ -29,53 +29,25 @@
           - "libcurl4-openssl-dev"
           - "gdebi-core"
           - "libapparmor1"
-          - "libcurl4-gnutls-dev"
+          - "libssl1.0.0"
+          #- "libcurl4-gnutls-dev"
           - "r-base"
         state: present
 
-    - name: Prep snap classic
-      shell: "[ -x /snap ] || yum install -y epel-release snapd && systemctl enable --now snapd.socket && ln -s /var/lib/snapd/snap /snap || echo ''"
-      register: snap_installed
-
-    # awscli and amazon-ssm-agent are on aws linux2 by default
-    - name: Install awscli and amazon-ssm-agent
-      snap:
-        name:
-          - aws-cli
-          - amazon-ssm-agent
-        classic: yes
-      when: "not snap_installed.stdout"
-
-    - name: Check if JumpCloud is already installed
-      shell: "[ -d /opt/jc ] && echo 'Found' || echo ''"
-      register: jc_installed
-
-    - name: Update time
-      shell: "ntpdate -u pool.ntp.org"
-      when: "not jc_installed.stdout"
-
-    - name: Install JumpCloud
-      shell: "curl --header 'x-connect-key: {{ lookup('env','JcConnectKey') }}' https://kickstart.jumpcloud.com/Kickstart | sudo bash"
-      args:
-        warn: False
-      when: "not jc_installed.stdout"
-
-    # http://www.rstudio.com/products/rstudio/download-server/
     - name: Ensure ansible-cache directory exists
       shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
-      sudo: yes
 
     - name: Download rstudio-server
-      get_url: url=http://download2.rstudio.org/rstudio-server-0.98.1103-amd64.deb dest=/var/local/ansible-cache/rstudio-server-0.98.1103-amd64.deb
-      sudo: yes
+      get_url: url=https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.5033-amd64.deb dest=/var/local/ansible-cache/rstudio-server-1.2.5033-amd64.deb
+      # sudo: yes
 
     - name: Install RStudio Server
-      command: gdebi /var/local/ansible-cache/rstudio-server-0.98.1103-amd64.deb -n
-      sudo: yes
+      command: gdebi /var/local/ansible-cache/rstudio-server-1.2.5033-amd64.deb
+      # sudo: yes
 
     - name: "Setup username: studio, password: password"
       user: name=studio password=password update_password=always uid=1031
-      sudo: yes
+      # sudo: yes
 
     - name: Install synapser
       shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
@@ -83,5 +55,5 @@
     - name: Install reticulate
       shell: "R -e \"iinstall.packages('reticulate')\""
 
-    - name: Install synapseclient
-      shell: "pip3 install synapseclient"
+    - pip:
+      name: synapseclient
