@@ -3,11 +3,11 @@
     ansible_python_interpreter: /usr/bin/python3
   become: yes
   tasks:
-    # Can't have upgrade cache because that
+    # No need to upgrade distribution, only need to install
     # causes an Could not get lock /var/lib/dpkg/lock-frontend error
-    - name: install system updates for ubuntu systems
-      apt: upgrade=dist
-      when: ansible_distribution == "Ubuntu"
+    # - name: install system updates for ubuntu systems
+    #   apt: upgrade=dist
+    #   when: ansible_distribution == "Ubuntu"
 
     - name: install packages
       environment:
@@ -52,3 +52,9 @@
 
     - name: Install synapser
       shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
+
+    - name: Install reticulate
+      shell: "R -e \"iinstall.packages('reticulate')\""
+
+    - name: Install synapseclient
+      shell: "pip3 install synapseclient"
