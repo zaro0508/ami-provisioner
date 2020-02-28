@@ -51,12 +51,12 @@
     "AmiUsers": "563295687221,055273631518,804034162148,237179673806",
     "Department": "Platform",
     "ImageName": "rStudioAmi-LATEST",
-    "InstanceType": "t3.large",
+    "InstanceType": "t3.small",
     "OwnerEmail": "thomas.yu@sagebase.org",
     "Project": "Infrastructure",
     "SnapshotUsers": "563295687221,055273631518,804034162148,237179673806",
     "SourceImage": "ami-0226a8af83fcecb43",
     "SshUsername": "ubuntu",
-    "VolumeSize": "50"
+    "VolumeSize": "16"
   }
 }
