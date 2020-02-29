@@ -47,8 +47,8 @@
     - name: Install synapser
       shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
 
-    # - name: Install reticulate
-    #   shell: "R -e \"iinstall.packages('reticulate')\""
+    - name: Install reticulate
+      shell: "R -e \"install.packages('reticulate')\""
 
     - pip:
         name: synapseclient
