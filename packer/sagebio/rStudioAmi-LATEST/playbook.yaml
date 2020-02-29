@@ -32,6 +32,7 @@
           - "libssl1.0.0"
           #- "libcurl4-gnutls-dev"
           - "r-base"
+          - "python3-pip"
         state: present
 
     - name: Download rstudio-server
@@ -46,8 +47,8 @@
     - name: Install synapser
       shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
 
-    - name: Install reticulate
-      shell: "R -e \"iinstall.packages('reticulate')\""
+    # - name: Install reticulate
+    #   shell: "R -e \"iinstall.packages('reticulate')\""
 
     - pip:
-      name: synapseclient
+        name: synapseclient
