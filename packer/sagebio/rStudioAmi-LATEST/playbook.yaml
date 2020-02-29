@@ -3,13 +3,26 @@
     ansible_python_interpreter: /usr/bin/python3
   become: yes
   tasks:
+
+
+    - name: Add APT repository
+      apt_repository:
+        repo: deb https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran35/
+        update_cache: no
+
+    - name: Add the APT key
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: E298A3A825C0D65DFD57CBB651716619E084DAB9
+
+    - name: install system updates for ubuntu systems
+      become: true
+      apt:
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
     # No need to upgrade distribution, only need to install
     # causes an Could not get lock /var/lib/dpkg/lock-frontend error
-    # - name: Add APT repository
-    #   apt_repository: repo="deb https://cran.rstudio.com/bin/linux/ubuntu/ {{ ansible_distribution_release }}/" mode=644
-
-    # - name: Add the APT key
-    #   apt_key: keyserver=keyserver.ubuntu.com id=E084DAB9
 
     # - name: install system updates for ubuntu systems
     #   apt: upgrade=dist
@@ -20,19 +33,19 @@
         MY_ENV_VARIABLE: DEBIAN_FRONTEND=noninteractive
       package:
         name:
-          - "ntpdate"
-          - "curl"
-          - "dpkg-dev"
-          - "zlib1g-dev"
-          - "libssl-dev"
-          - "libffi-dev"
-          - "libcurl4-openssl-dev"
-          - "gdebi-core"
-          - "libapparmor1"
-          - "libssl1.0.0"
-          #- "libcurl4-gnutls-dev"
-          - "r-base"
-          - "python3-pip"
+          - ntpdate
+          - curl
+          - dpkg-dev
+          - zlib1g-dev
+          - libssl-dev
+          - libffi-dev
+          - libcurl4-openssl-dev
+          - gdebi-core
+          - libapparmor1
+          - libssl1.0.0
+          - r-base
+          - r-base-dev
+          - python3-pip
         state: present
 
     - name: Download rstudio-server
@@ -43,6 +56,12 @@
 
     - name: "Setup username: studio, password: password"
       user: name=rstudio password=$6$0Xi18hg.I2kOQGPt$F7M8UDMsTwVLqtbHq2gzZ8Eox5xvUeNoK9DjezVjimuCQblDOc7HGy/Ea2V7vLX1GiKeeDHygsbJv0t.pW3iq. update_password=always uid=1031
+
+    - name: add 80 port
+      shell: "echo www-port=80 >> /etc/rstudio/rserver.conf"
+
+    - name: restart rstudio
+      shell: "rstudio-server restart"
 
     - name: Install synapser
       shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
