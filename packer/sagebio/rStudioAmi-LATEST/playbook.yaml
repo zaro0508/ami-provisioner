@@ -42,7 +42,7 @@
       command: gdebi --non-interactive /tmp/rstudio.deb
 
     - name: "Setup username: studio, password: password"
-      user: name=studio password=password update_password=always uid=1031
+      user: name=rstudio password=$6$0Xi18hg.I2kOQGPt$F7M8UDMsTwVLqtbHq2gzZ8Eox5xvUeNoK9DjezVjimuCQblDOc7HGy/Ea2V7vLX1GiKeeDHygsbJv0t.pW3iq. update_password=always uid=1031
 
     - name: Install synapser
       shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
