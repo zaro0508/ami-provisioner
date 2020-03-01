@@ -46,6 +46,7 @@
           - r-base
           - r-base-dev
           - python3-pip
+          - libxml2-dev
         state: present
 
     - name: Download rstudio-server
@@ -57,17 +58,26 @@
     - name: "Setup username: studio, password: password"
       user: name=rstudio password=$6$0Xi18hg.I2kOQGPt$F7M8UDMsTwVLqtbHq2gzZ8Eox5xvUeNoK9DjezVjimuCQblDOc7HGy/Ea2V7vLX1GiKeeDHygsbJv0t.pW3iq. update_password=always uid=1031
 
+    # Update default rstudio port to 80
     - name: add 80 port
       shell: "echo www-port=80 >> /etc/rstudio/rserver.conf"
 
-    # - name: restart rstudio
-    #   shell: "rstudio-server restart"
-
+    # Install essential R packages
     - name: Install synapser
       shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
 
-    - name: Install reticulate
-      shell: "R -e \"install.packages('reticulate')\""
+    - name: Install tidyverse
+      shell: "R -e \"install.packages('tidyverse')\""
 
-    - pip:
-        name: synapseclient
+    - name: Install devtools
+      shell: "R -e \"install.packages('devtools')\""
+
+    - name: Install BiocManager
+      shell: "R -e \"install.packages('BiocManager')\""
+
+    # reticulate has python path issues
+    # - name: Install reticulate
+    #   shell: "R -e \"install.packages('reticulate')\""
+
+    # - pip:
+    #     name: synapseclient
