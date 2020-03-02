@@ -59,8 +59,9 @@
       user: name=rstudio password=$6$0Xi18hg.I2kOQGPt$F7M8UDMsTwVLqtbHq2gzZ8Eox5xvUeNoK9DjezVjimuCQblDOc7HGy/Ea2V7vLX1GiKeeDHygsbJv0t.pW3iq. update_password=always
 
     # Update default rstudio port to 80
-    - name: add 80 port
-      shell: "echo www-port=80 >> /etc/rstudio/rserver.conf"
+    # services on ports below 1024 have to run as root to attach... so anything >1024 is safer
+    # - name: add 80 port
+    #   shell: "echo www-port=80 >> /etc/rstudio/rserver.conf"
 
     # Install essential R packages
     - name: Install synapser
