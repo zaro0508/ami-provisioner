@@ -56,7 +56,7 @@
       command: gdebi --non-interactive /tmp/rstudio.deb
 
     - name: "Setup username: studio, password: password"
-      user: name=rstudio password=$6$0Xi18hg.I2kOQGPt$F7M8UDMsTwVLqtbHq2gzZ8Eox5xvUeNoK9DjezVjimuCQblDOc7HGy/Ea2V7vLX1GiKeeDHygsbJv0t.pW3iq. update_password=always uid=1031
+      user: name=rstudio password=$6$0Xi18hg.I2kOQGPt$F7M8UDMsTwVLqtbHq2gzZ8Eox5xvUeNoK9DjezVjimuCQblDOc7HGy/Ea2V7vLX1GiKeeDHygsbJv0t.pW3iq. update_password=always
 
     # Update default rstudio port to 80
     - name: add 80 port
