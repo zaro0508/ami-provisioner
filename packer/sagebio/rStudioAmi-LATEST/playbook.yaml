@@ -36,34 +36,6 @@
           - python3-pip
           - libxml2-dev
 
-    # No need to upgrade distribution, only need to install
-    # causes an Could not get lock /var/lib/dpkg/lock-frontend error
-
-    # - name: install system updates for ubuntu systems
-    #   apt: upgrade=dist
-    #   when: ansible_distribution == "Ubuntu"
-
-    # - name: install packages
-    #   environment:
-    #     MY_ENV_VARIABLE: DEBIAN_FRONTEND=noninteractive
-    #   package:
-    #     name:
-    #       - ntpdate
-    #       - curl
-    #       - dpkg-dev
-    #       - zlib1g-dev
-    #       - libssl-dev
-    #       - libffi-dev
-    #       - libcurl4-openssl-dev
-    #       - gdebi-core
-    #       - libapparmor1
-    #       - libssl1.0.0
-    #       - r-base
-    #       - r-base-dev
-    #       - python3-pip
-    #       - libxml2-dev
-    #     state: present
-
     - name: Download rstudio-server
       get_url: url=https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.5033-amd64.deb dest=/tmp/rstudio.deb
 
