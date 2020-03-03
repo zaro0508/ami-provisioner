@@ -1,0 +1,84 @@
+- hosts: all
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  become: yes
+  tasks:
+
+
+    - name: Add APT repository
+      apt_repository:
+        repo: deb https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran35/
+        update_cache: no
+
+    - name: Add the APT key
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: E298A3A825C0D65DFD57CBB651716619E084DAB9
+
+    - name: install system updates for ubuntu systems
+      become: true
+      apt:
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    # No need to upgrade distribution, only need to install
+    # causes an Could not get lock /var/lib/dpkg/lock-frontend error
+
+    # - name: install system updates for ubuntu systems
+    #   apt: upgrade=dist
+    #   when: ansible_distribution == "Ubuntu"
+
+    - name: install packages
+      environment:
+        MY_ENV_VARIABLE: DEBIAN_FRONTEND=noninteractive
+      package:
+        name:
+          - ntpdate
+          - curl
+          - dpkg-dev
+          - zlib1g-dev
+          - libssl-dev
+          - libffi-dev
+          - libcurl4-openssl-dev
+          - gdebi-core
+          - libapparmor1
+          - libssl1.0.0
+          - r-base
+          - r-base-dev
+          - python3-pip
+          - libxml2-dev
+        state: present
+
+    - name: Download rstudio-server
+      get_url: url=https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.5033-amd64.deb dest=/tmp/rstudio.deb
+
+    - name: Install RStudio Server
+      command: gdebi --non-interactive /tmp/rstudio.deb
+
+    - name: "Setup username: studio, password: find rstudio_instance in lastpass"
+      user: name=rstudio password=$6$1siVsJSzugU0JE1W$NYwjB0tFtnoSfXYh1D3P/hRW/yDxFME0u.rkeHI.d7FMAFYwl9V8kGzWBp0zgw1L7YaIBo4RNNiTNz78EZvQL. update_password=always
+
+    # Update default rstudio port to 80
+    # services on ports below 1024 have to run as root to attach... so anything >1024 is safer
+    # - name: add 80 port
+    #   shell: "echo www-port=80 >> /etc/rstudio/rserver.conf"
+
+    # Install essential R packages
+    - name: Install synapser
+      shell: "R -e \"install.packages('synapser', repos=c('http://ran.synapse.org', 'http://cran.fhcrc.org'))\""
+
+    - name: Install tidyverse
+      shell: "R -e \"install.packages('tidyverse')\""
+
+    - name: Install devtools
+      shell: "R -e \"install.packages('devtools')\""
+
+    - name: Install BiocManager
+      shell: "R -e \"install.packages('BiocManager')\""
+
+    # reticulate has python path issues
+    # - name: Install reticulate
+    #   shell: "R -e \"install.packages('reticulate')\""
+
+    # - pip:
+    #     name: synapseclient
