@@ -3,9 +3,6 @@
     ansible_python_interpreter: /usr/bin/python3
   become: yes
   tasks:
-    - name: Wait for autoupdates
-      become: yes
-      shell: while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 ; do sleep 1 ; done;
 
     - name: Add R-Project apt repository
       apt_repository:
@@ -16,10 +13,6 @@
       apt_key:
         keyserver: keyserver.ubuntu.com
         id: E298A3A825C0D65DFD57CBB651716619E084DAB9
-
-    - name: Update apt cache
-      apt: update_cache=yes cache_valid_time=3600
-      become: yes
 
     - name: update ubuntu and install packages
       become: true
