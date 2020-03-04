@@ -3,11 +3,18 @@
     ansible_python_interpreter: /usr/bin/python3
   become: yes
   tasks:
+    - name: Wait for autoupdate to finish
+      become: yes
+      shell: while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 ; do sleep 1 ; done;
 
     - name: Add R-Project apt repository
       apt_repository:
         repo: deb https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran35/
         update_cache: no
+
+    - name: Update apt cache
+      apt: update_cache=yes
+      become: yes
 
     - name: Add the CRAN apt key
       apt_key:
@@ -19,7 +26,6 @@
       environment:
         MY_ENV_VARIABLE: DEBIAN_FRONTEND=noninteractive
       apt:
-        update_cache: yes
         pkg:
           - ntpdate
           - curl
@@ -35,7 +41,7 @@
           - python3-pip
           - libxml2-dev
 
-    - name: Download rstudio-server
+    - name: Download RStudio Server
       get_url: url=https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.5033-amd64.deb dest=/tmp/rstudio.deb
 
     - name: Install RStudio Server
