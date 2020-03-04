@@ -25,7 +25,7 @@
       become: true
       environment:
         MY_ENV_VARIABLE: DEBIAN_FRONTEND=noninteractive
-      apt: 
+      apt:
         pkg:
           - ntpdate
           - curl
@@ -41,7 +41,7 @@
           - python3-pip
           - libxml2-dev
 
-    - name: Download rstudio-server
+    - name: Download RStudio Server
       get_url: url=https://download2.rstudio.org/server/bionic/amd64/rstudio-server-1.2.5033-amd64.deb dest=/tmp/rstudio.deb
 
     - name: Install RStudio Server
