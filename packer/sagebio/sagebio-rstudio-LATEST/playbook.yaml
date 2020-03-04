@@ -3,7 +3,7 @@
 
   tasks:
     - name: Get base playbook
-      get_url: utl=https://github.com/Sage-Bionetworks/ami-provisioner/blob/master/packer/sagebio/sagebio-base-ubuntu-bionic-LATEST/playbook.yaml dest=/tmp/base.yaml
+      get_url: url=https://github.com/Sage-Bionetworks/ami-provisioner/blob/master/packer/sagebio/sagebio-base-ubuntu-bionic-LATEST/playbook.yaml dest=/tmp/base.yaml
 
     - import_tasks: /tmp/base.yaml
 
