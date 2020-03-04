@@ -1,8 +1,11 @@
-#- hosts: all
-#  become: yes
+- hosts: all
+  become: yes
 
-#  tasks:
-    - include: ../sagebio-base-ubuntu-bionic-LATEST/playbook.yaml
+  tasks:
+    - name: Get base playbook
+      get_url: utl=https://github.com/Sage-Bionetworks/ami-provisioner/blob/master/packer/sagebio/sagebio-base-ubuntu-bionic-LATEST/playbook.yaml dest=/tmp/base.yaml
+
+    - import_tasks: /tmp/base.yaml
 
     - name: Add the CRAN apt key
       apt_key:
