@@ -21,6 +21,7 @@
           - "ntpdate"
           - "curl"
           - "zlib1g-dev"
+          - "libclang-dev"
           - "libssl-dev"
           - "libffi-dev"
           - "libcurl4-openssl-dev"
