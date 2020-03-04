@@ -1,7 +1,7 @@
-- hosts: all
-  become: yes
+#- hosts: all
+#  become: yes
 
-  tasks:
+#  tasks:
     - include: ../sagebio-base-ubuntu-bionic-LATEST/playbook.yaml
 
     - name: Add the CRAN apt key
