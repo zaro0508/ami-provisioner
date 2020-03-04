@@ -12,14 +12,14 @@
         repo: deb https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran35/
         update_cache: no
 
-    - name: Update apt cache
-      apt: update_cache=yes
-      become: yes
-
     - name: Add the CRAN apt key
       apt_key:
         keyserver: keyserver.ubuntu.com
         id: E298A3A825C0D65DFD57CBB651716619E084DAB9
+
+    - name: Update apt cache
+      apt: update_cache=yes
+      become: yes
 
     - name: update ubuntu and install packages
       become: true
