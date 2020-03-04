@@ -3,8 +3,8 @@
     ansible_python_interpreter: /usr/bin/python3
   become: yes
   tasks:
-    - name: Wait for any possibly running unattended upgrade to finish
-      raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true
+          #    - name: Wait for any possibly running unattended upgrade to finish
+          #raw: systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true
 
     - name: Add R-Project apt repository
       apt_repository:
