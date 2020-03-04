@@ -24,7 +24,7 @@
       become: true
       environment:
         MY_ENV_VARIABLE: DEBIAN_FRONTEND=noninteractive
-      shell: aptdcon --install {{ item }}
+      shell: apt-get install {{ item }}
       with_items:
           - ntpdate
           - curl
