@@ -2,7 +2,7 @@
   become: yes
 
   tasks:
-    - include: ../sagebio-ubuntu-base-LATEST/playbook.yaml
+    - include: ../sagebio-base-ubuntu-bionic-LATEST/playbook.yaml
 
     - name: Add the CRAN apt key
       apt_key:
